@@ -1,0 +1,14 @@
+ Volume in drive C has no label.
+ Volume Serial Number is C4E4-194C
+
+ Directory of C:\Users\user\Farmatech\src
+
+20/05/2023  14:33    <DIR>          .
+20/05/2023  14:33    <DIR>          ..
+20/05/2023  14:32             2.016 Farmaceutico.java
+20/05/2023  14:32            12.840 Main.java
+20/05/2023  14:32               715 Medicamento.java
+20/05/2023  14:32               737 Prescritor.java
+20/05/2023  14:33                 0 teste.txt
+               5 File(s)         16.308 bytes
+               2 Dir(s)  80.546.430.976 bytes free
