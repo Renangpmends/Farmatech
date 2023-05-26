@@ -6,7 +6,7 @@ public class Farmaceutico {
     private String nome;
     private String senha;
     private boolean admin;
-
+    //testeteste
     public static void main(String[] args) {
         // Exemplo de uso
         Farmaceutico farmaceutico = new Farmaceutico();
