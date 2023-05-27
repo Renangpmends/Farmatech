@@ -1,37 +1,86 @@
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
 public class Main {
 
     private static Farmaceutico farmaceutico;
     private static Prescritor prescritor;
     private static Medicamento medicamento;
 
+    private static final String ADMIN_CPF = "12345678910";
+    private static final String ADMIN_PASSWORD = "123456789";
+
     public static void main(String[] args) {
         int opcao = -1;
 
         while (opcao != 0) {
-            opcao = Integer.parseInt(JOptionPane.showInputDialog(
-                    "Escolha uma opção:\n" +
-                            "1. CRUD Farmaceutico\n" +
-                            "2. CRUD Prescritor\n" +
-                            "3. CRUD Medicamento\n" +
-                            "0. Sair"
-            ));
+            try {
+                opcao = Integer.parseInt(JOptionPane.showInputDialog(
+                        "Escolha uma opção:\n" +
+                                "1. Login\n" +
+                                "0. Sair"
+                ));
 
-            switch (opcao) {
-                case 1:
-                    crudFarmaceutico();
-                    break;
-                case 2:
-                    crudPrescritor();
-                    break;
-                case 3:
-                    crudMedicamento();
-                    break;
-                case 0:
-                    JOptionPane.showMessageDialog(null, "Saindo do programa...");
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Opção inválida!");
+                switch (opcao) {
+                    case 1:
+                        realizarLogin();
+                        break;
+                    case 0:
+                        JOptionPane.showMessageDialog(null, "Saindo do programa...");
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção inválida!");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Opção inválida! Digite um número.");
+            }
+        }
+    }
+
+    private static void realizarLogin() {
+        String cpf = JOptionPane.showInputDialog("Informe o CPF do usuário:");
+        JPasswordField passwordField = new JPasswordField();
+        int option = JOptionPane.showConfirmDialog(null, passwordField, "Informe a senha do usuário:", JOptionPane.OK_CANCEL_OPTION);
+
+        if (option == JOptionPane.OK_OPTION) {
+            String senha = new String(passwordField.getPassword());
+
+            if (cpf.equals(ADMIN_CPF) && senha.equals(ADMIN_PASSWORD)) {
+                JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
+
+                int opcao = -1;
+
+                while (opcao != 0) {
+                    try {
+                        opcao = Integer.parseInt(JOptionPane.showInputDialog(
+                                "Escolha uma opção:\n" +
+                                        "1. CRUD Farmaceutico\n" +
+                                        "2. CRUD Prescritor\n" +
+                                        "3. CRUD Medicamento\n" +
+                                        "0. Sair"
+                        ));
+
+                        switch (opcao) {
+                            case 1:
+                                crudFarmaceutico();
+                                break;
+                            case 2:
+                                crudPrescritor();
+                                break;
+                            case 3:
+                                crudMedicamento();
+                                break;
+                            case 0:
+                                JOptionPane.showMessageDialog(null, "Saindo do programa...");
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(null, "Opção inválida!");
+                        }
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Opção inválida! Digite um número.");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "CPF ou senha incorretos!");
             }
         }
     }
@@ -76,7 +125,7 @@ public class Main {
 
         farmaceutico.setCPF(JOptionPane.showInputDialog("Informe o CPF do Farmaceutico:"));
         farmaceutico.setNome(JOptionPane.showInputDialog("Informe o Nome do Farmaceutico:"));
-        farmaceutico.setSenha(JOptionPane.showInputDialog("Informe a Senha do Farmaceutico:"));
+        farmaceutico.setSenha(JOptionPane.showInputDialog("Informe a Senha do Farmaceutico: (A senha deve ter de 9 a 11 caracteres)"));
         farmaceutico.setAdmin(Boolean.parseBoolean(JOptionPane.showInputDialog("Usuário Admin? (true/false):")));
 
         JOptionPane.showMessageDialog(null, "Farmaceutico criado:\n" +
@@ -122,7 +171,7 @@ public class Main {
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum Farmaceutico encontrado!");
         }
-    }
+    }       
 
     private static void crudPrescritor() {
         int opcao = -1;
@@ -164,13 +213,11 @@ public class Main {
 
         prescritor.setCRM(JOptionPane.showInputDialog("Informe o CRM do Prescritor:"));
         prescritor.setNome(JOptionPane.showInputDialog("Informe o Nome do Prescritor:"));
-        prescritor.setMarca(JOptionPane.showInputDialog("Informe a Marca do Prescritor:"));
         prescritor.setHomologacao(Boolean.parseBoolean(JOptionPane.showInputDialog("Informe a Homologação do Prescritor (true/false):")));
 
         JOptionPane.showMessageDialog(null, "Prescritor criado:\n" +
                 "CRM: " + prescritor.getCRM() + "\n" +
                 "Nome: " + prescritor.getNome() + "\n" +
-                "Marca: " + prescritor.getMarca() + "\n" +
                 "Homologação: " + prescritor.isHomologacao());
     }
 
@@ -179,7 +226,6 @@ public class Main {
             JOptionPane.showMessageDialog(null, "Prescritor:\n" +
                     "CRM: " + prescritor.getCRM() + "\n" +
                     "Nome: " + prescritor.getNome() + "\n" +
-                    "Marca: " + prescritor.getMarca() + "\n" +
                     "Homologação: " + prescritor.isHomologacao());
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum Prescritor encontrado!");
@@ -190,13 +236,11 @@ public class Main {
         if (prescritor != null) {
             prescritor.setCRM(JOptionPane.showInputDialog("Informe o novo CRM do Prescritor:"));
             prescritor.setNome(JOptionPane.showInputDialog("Informe o novo Nome do Prescritor:"));
-            prescritor.setMarca(JOptionPane.showInputDialog("Informe a nova Marca do Prescritor:"));
             prescritor.setHomologacao(Boolean.parseBoolean(JOptionPane.showInputDialog("Informe a nova Homologação do Prescritor (true/false):")));
 
             JOptionPane.showMessageDialog(null, "Prescritor atualizado:\n" +
                     "CRM: " + prescritor.getCRM() + "\n" +
                     "Nome: " + prescritor.getNome() + "\n" +
-                    "Marca: " + prescritor.getMarca() + "\n" +
                     "Homologação: " + prescritor.isHomologacao());
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum Prescritor encontrado!");

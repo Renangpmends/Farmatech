@@ -6,7 +6,7 @@ public class Farmaceutico {
     private String nome;
     private String senha;
     private boolean admin;
-    //testeteste
+
     public static void main(String[] args) {
         // Exemplo de uso
         Farmaceutico farmaceutico = new Farmaceutico();
@@ -25,12 +25,16 @@ public class Farmaceutico {
     }
 
     public void setCPF(String CPF) {
-        // Verifica se o CPF possui apenas 1 caractere numérico
-        if (Pattern.matches("^\\d{1}$", CPF)) {
-            this.CPF = CPF;
-        } else {
-            JOptionPane.showMessageDialog(null, "O CPF deve ter apenas 1 caractere numérico!");
-            this.CPF = null; // Cancela a operação
+        try {
+            // Verifica se o CPF possui exatamente 11 caracteres numéricos
+            if (Pattern.matches("^\\d{11}$", CPF)) {
+                this.CPF = CPF;
+            } else {
+                throw new IllegalArgumentException("O CPF deve ter 11 caracteres numéricos!");
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            //this.CPF = null; // Cancela a operação
         }
     }
 
@@ -47,12 +51,16 @@ public class Farmaceutico {
     }
 
     public void setSenha(String senha) {
-        // Verifica se a senha possui no máximo 9 caracteres alfanuméricos
-        if (Pattern.matches("^[a-zA-Z0-9]{0,9}$", senha)) {
-            this.senha = senha;
-        } else {
-            JOptionPane.showMessageDialog(null, "A senha deve ter no máximo 9 caracteres alfanuméricos!");
-            this.senha = null; // Cancela a operação
+        try {
+            // Verifica se a senha possui entre 9 e 11 caracteres alfanuméricos
+            if (senha.length() >= 9 && senha.length() <= 11) {
+                this.senha = senha;
+            } else {
+                throw new IllegalArgumentException("A senha deve ter entre 9 e 11 caracteres!");
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            //this.senha = null; // Cancela a operação
         }
     }
 
